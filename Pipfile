@@ -18,6 +18,7 @@ celery = "*"
 django-celery-results = "*"
 django-celery-beat = "*"
 django-celery-email = "*"
+channels = {extras = ["daphne"], version = "*"}
 
 [dev-packages]
 
