@@ -124,6 +124,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "project.wsgi.application"
 ASGI_APPLICATION = "project.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis.my.lan", 6379)],
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -158,9 +167,7 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": (
-            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-        ),
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -245,8 +252,7 @@ LOGGING = {
         },
         "papertrail": {
             "format": (
-                f"{env('PAPERTRAIL_APP_NAME')} %(asctime)s - %(levelname)s - %(name)s -"
-                " %(message)s"
+                f"{env('PAPERTRAIL_APP_NAME')} %(asctime)s - %(levelname)s - %(name)s - %(message)s"
             )
         },
     },
@@ -273,9 +279,7 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console"] + (
-            ["papertrail"]
-            if env("PAPERTRAIL_ADDRESS") and env("PAPERTRAIL_PORT")
-            else ["file"]
+            ["papertrail"] if env("PAPERTRAIL_ADDRESS") and env("PAPERTRAIL_PORT") else ["file"]
         ),
         "level": env("LOG_LEVEL_CONFIG"),
     },
@@ -296,9 +300,7 @@ match env("EMAIL_BACKEND_TYPE"):
         CELERY_EMAIL_BACKEND = "anymail.backends.postmark.EmailBackend"
         ANYMAIL = {"POSTMARK_SERVER_TOKEN": env("POSTMARK_SERVER_TOKEN")}
         DEFAULT_FROM_EMAIL = "mail@tentativeknowledge.com"
-        SERVER_EMAIL = (  # default from-email for Django errors
-            "mail@tentativeknowledge.com"
-        )
+        SERVER_EMAIL = "mail@tentativeknowledge.com"  # default from-email for Django errors
     case _:
         CELERY_EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
