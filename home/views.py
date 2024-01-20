@@ -1,5 +1,6 @@
-from django.views.generic import TemplateView
+from django.http import HttpRequest
+from django.shortcuts import render
 
 
-class HomeView(TemplateView):
-    template_name = "home/home.html"
+async def index(request: HttpRequest):
+    return render(request, "home/home.html")
