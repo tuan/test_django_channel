@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djlint = "*"
+django-vite = "*"
+django-environ = "*"
+whitenoise = "*"
+gunicorn = "*"
+django-allauth = "*"
+django-anymail = "*"
+redis = "*"
+hiredis = "*"
+celery = "*"
+django-celery-results = "*"
+django-celery-beat = "*"
+django-celery-email = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
